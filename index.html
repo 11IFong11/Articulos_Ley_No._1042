@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ley No. 1042</title>
+    <style>
+        :root {
+            /* Colores ajustados para legibilidad total */
+            --sky-blue-safe: #1e5d8a; /* Un celeste más profundo para que el blanco se lea */
+            --primary-blue: #003366;
+            --primary-dark: #00001a;
+            --accent-gold: #FFD700;
+            --white: #ffffff;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        body {
+            /* Degradado mejorado para contraste */
+            background: linear-gradient(180deg, var(--sky-blue-safe) 0%, var(--primary-blue) 45%, var(--primary-dark) 100%);
+            background-attachment: scroll;
+            min-height: 100vh;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #main-wrapper {
+            width: 90%;
+            max-width: 1100px;
+            margin: 80px 0;
+            transition: var(--transition);
+        }
+
+        #main-wrapper.mobile-format {
+            max-width: 400px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra para asegurar lectura */
+        }
+
+        .chapter-label {
+            margin: 60px 0 20px 0;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+
+        .article-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .article-item.important {
+            border: 2px solid var(--accent-gold);
+            background: rgba(255, 215, 0, 0.08);
+        }
+
+        .article-btn {
+            width: 100%;
+            padding: 22px 30px;
+            background: none; border: none;
+            color: var(--white);
+            text-align: left;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .article-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .article-item.open .article-body {
+            max-height: 800px;
+        }
+
+        .article-text {
+            padding: 0 30px 30px 30px;
+            line-height: 1.7;
+            font-weight: 300;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Footer Blanco Premium */
+        footer {
+            width: 100%;
+            background: var(--white);
+            color: #1a1a1a;
+            padding: 80px 20px;
+            margin-top: 100px;
+            display: flex; justify-content: center;
+        }
+
+        .footer-content {
+            width: 100%;
+            max-width: 1100px;
+            display: flex; justify-content: space-between; align-items: flex-start;
+        }
+
+        .uni-info h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 10px; }
+
+        .member-list {
+            text-align: right;
+            border-left: 1px solid #ddd;
+            padding-left: 40px;
+        }
+
+        .member-list p { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; }
+
+        /* Botón Flotante */
+        .format-toggle {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--white); color: var(--primary-blue);
+            border: none; padding: 15px 30px; border-radius: 4px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content { flex-direction: column; gap: 40px; }
+            .member-list { text-align: left; border-left: none; padding-left: 0; }
+            h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="format-toggle" id="toggleBtn" onclick="changeFormat()">PC</button>
+
+    <div id="main-wrapper">
+        <header>
+            <h1>Ley No. 1042<br>Ley Especial de Ciberdelitos</h1>
+        </header>
+
+        <div id="content-list"></div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="uni-info">
+                <h2>UNI</h2>
+                <p style="font-weight: bold; font-size: 1.2rem;">Universidad Nacional de Ingeniería</p>
+                <p style="margin-top: 15px; color: #444; max-width: 500px;">
+                    Dirección de Área de Conocimiento de Arquitectura y Construcción (DACAC)
+                </p>
+            </div>
+            <div class="member-list">
+                <h4 style="color: #999; margin-bottom: 15px; letter-spacing: 2px;">INTEGRANTES</h4>
+                <p>Débora Vega</p>
+                <p>Iván Fóng</p>
+                <p>Jonathan López</p>
+                <p>Wendy Moreno</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const lawData = [
+            { type: 'chapter', title: 'Capítulo I — Disposiciones Generales' },
+            { id: 1, title: 'Objeto', text: 'Prevenir, investigar, sancionar y combatir los delitos cometidos mediante tecnologías digitales e internet.' },
+            { id: 2, title: 'Ámbito de aplicación', text: 'Aplica a personas naturales o jurídicas que cometan ciberdelitos en territorio nacional.' },
+            { id: 3, title: 'Definiciones', text: 'Establece términos técnicos como sistema informático, datos, acceso ilícito y evidencia electrónica.' },
+            
+            { type: 'chapter', title: 'Capítulo II — Integridad de Sistemas' },
+            { id: 4, title: 'Acceso indebido a sistemas informáticos', text: 'Sanciona el ingreso no autorizado a computadoras, cuentas o redes digitales protegidas.', important: true },
+            { id: 5, title: 'Acceso indebido a programas o datos', text: 'Castiga el acceso ilegal a archivos, programas o bases de datos privadas.', important: true },
+            { id: 6, title: 'Interceptación de comunicaciones', text: 'Prohíbe interceptar mensajes o correos electrónicos sin autorización legal.' },
+            { id: 7, title: 'Violación a la seguridad', text: 'Sanciona acciones para vulnerar mecanismos de protección digital.' },
+            { id: 8, title: 'Interferencia del sistema o datos', text: 'Castiga la destrucción o bloqueo de sistemas y datos informáticos.', important: true },
+            { id: 9, title: 'Uso de dispositivos maliciosos', text: 'Prohíbe crear o distribuir malware y virus informáticos.' },
+            { id: 10, title: 'Uso de contraseñas ajenas', text: 'Sanciona el uso ilegal de claves o credenciales de terceros.' },
+            { id: 11, title: 'Manipulación de sistemas', text: 'Castiga la alteración fraudulenta del funcionamiento tecnológico.' },
+            { id: '11 Bis', title: 'Agravantes', text: 'Aumento de penas en delitos contra instituciones públicas.' },
+
+            { type: 'chapter', title: 'Capítulo III — Delitos Informáticos' },
+            { id: 12, title: 'Fraude informático', text: 'Sanciona estafas realizadas mediante manipulación tecnológica.', important: true },
+            { id: 13, title: 'Espionaje informático', text: 'Castiga la obtención ilegal de información confidencial o reservada.', important: true },
+            { id: 14, title: 'Transferencia de información', text: 'Prohíbe compartir o vender información protegida sin permiso.' },
+            { id: 15, title: 'Daños informáticos', text: 'Sanciona la destrucción de equipos, archivos o sistemas digitales.' },
+
+            { type: 'chapter', title: 'Capítulo IV — Contenido de los Datos' },
+            { id: 16, title: 'Falsificación informática', text: 'Castiga la creación fraudulenta de registros digitales falsos.' },
+            { id: 18, title: 'Robo de identidad', text: 'Castiga hacerse pasar por otro usando sus datos personales.' },
+            { id: 24, title: 'Difusión no autorizada', text: 'Castiga publicar fotos o videos privados sin consentimiento.' },
+            { id: 26, title: 'Acoso digital', text: 'Castiga el hostigamiento constante por medios tecnológicos.' },
+            { id: 28, title: 'Propagación de noticias falsas', text: 'Sanciona difundir información falsa que cause alarma o temor.', important: true },
+            { id: 30, title: 'Suplantación de identidad', text: 'Sanciona crear perfiles falsos para engañar a terceros.', important: true },
+
+            { type: 'chapter', title: 'Capítulo V — Libertad e Integridad Sexual' },
+            { id: 31, title: 'Pornografía infantil digital', text: 'Prohíbe producir o compartir contenido sexual con menores.' },
+            { id: 32, title: 'Revelación indebida de datos', text: 'Sanciona la divulgación ilegal de información privada confidencial.', important: true },
+            { id: 35, title: 'Acoso sexual tecnológico', text: 'Sanciona conductas de hostigamiento sexual por internet.' },
+
+            { type: 'chapter', title: 'Capítulo VI — Procedimientos' },
+            { id: 36, title: 'Investigación digital', text: 'Normas para recolectar evidencia tecnológica legal.' },
+            { id: 40, title: 'Evidencia electrónica', text: 'Validez de pruebas digitales en juicios.' }
+            // Los demás artículos siguen la misma lógica...
+        ];
+
+        const list = document.getElementById('content-list');
+        const wrapper = document.getElementById('main-wrapper');
+        const btn = document.getElementById('toggleBtn');
+
+        function render() {
+            lawData.forEach(item => {
+                if(item.type === 'chapter') {
+                    const h = document.createElement('div');
+                    h.className = 'chapter-label';
+                    h.innerText = item.title;
+                    list.appendChild(h);
+                } else {
+                    const card = document.createElement('div');
+                    card.className = `article-item ${item.important ? 'important' : ''}`;
+                    card.innerHTML = `
+                        <button class="article-btn">
+                            <span>Art. ${item.id} — ${item.title}</span>
+                            <span style="opacity: 0.3">▼</span>
+                        </button>
+                        <div class="article-body">
+                            <div class="article-text">${item.text}</div>
+                        </div>
+                    `;
+                    card.querySelector('.article-btn').onclick = () => {
+                        const isOpen = card.classList.contains('open');
+                        document.querySelectorAll('.article-item').forEach(el => el.classList.remove('open'));
+                        if(!isOpen) card.classList.add('open');
+                    };
+                    list.appendChild(card);
+                }
+            });
+        }
+
+        function changeFormat() {
+            wrapper.classList.toggle('mobile-format');
+            btn.innerText = wrapper.classList.contains('mobile-format') ? 'Móvil' : 'PC';
+        }
+
+        render();
+    </script>
+</body>
+</html>
